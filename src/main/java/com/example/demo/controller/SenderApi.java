@@ -3,7 +3,6 @@ package com.example.demo.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.model.Content;
 import com.example.demo.model.Metadata;
 import com.example.demo.service.ContentService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,8 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
 
 
 
@@ -26,12 +26,13 @@ public class SenderApi {
     }
 
     @PostMapping("/send")
-    public Metadata sendContent(@RequestBody Metadata metadata) {
-        return contentService.saveMetadata(metadata);
+    public ResponseEntity<Metadata> sendContent(@RequestBody Metadata metadata) {
+        Metadata savedMetadata = contentService.saveMetadata(metadata);
+        return ResponseEntity.ok(savedMetadata);
     }
 
     @GetMapping("/content/{senderId}")
-    public List<Metadata> getContentBySenderId(@RequestParam Integer senderId) {
+    public List<Metadata> getContentBySenderId(@PathVariable Integer senderId) {
         return contentService.getContentBySenderId(senderId);
     }
     
