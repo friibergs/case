@@ -8,11 +8,7 @@ import com.example.demo.service.ContentService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.List;
-
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 
 
@@ -30,11 +26,5 @@ public class SenderApi {
         Metadata savedMetadata = contentService.saveMetadata(metadata);
         return ResponseEntity.ok(savedMetadata);
     }
-
-    @GetMapping("/content/{senderId}")
-    public List<Metadata> getContentBySenderId(@PathVariable Integer senderId) {
-        return contentService.getContentBySenderId(senderId);
-    }
-    
-
+   
 }
