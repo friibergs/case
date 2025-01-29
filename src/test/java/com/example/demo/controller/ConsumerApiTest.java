@@ -8,15 +8,16 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import java.util.Collections;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(SenderApi.class)
-public class SenderApiTest {
+@WebMvcTest(ConsumerApi.class)
+public class ConsumerApiTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -36,13 +37,11 @@ public class SenderApiTest {
     }
 
     @Test
-    public void testSendContent() throws Exception {
-        Mockito.when(contentService.saveMetadata(Mockito.any(Metadata.class))).thenReturn(metadata);
+    public void testGetContentBySenderId() throws Exception {
+        Mockito.when(contentService.getContentBySenderId(1)).thenReturn(Collections.singletonList(metadata));
 
-        mockMvc.perform(post("/api/sender/send")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"senderId\":1,\"fileType\":\"pdf\",\"receiverId\":100,\"isPayable\":true}"))
+        mockMvc.perform(get("/api/consumer/content/1"))
                 .andExpect(status().isOk())
-                .andExpect(content().json("{\"senderId\":1,\"fileType\":\"pdf\",\"receiverId\":100,\"isPayable\":true}"));
+                .andExpect(content().json("[{\"senderId\":1,\"fileType\":\"pdf\",\"receiverId\":100,\"isPayable\":true}]"));
     }
 }
