@@ -14,6 +14,7 @@ public class Metadata {
     private Integer receiverId;
     private String  fileType;
     private boolean isPayable;
+    private String filePath;
 
     public Long getId() {
         return id;
@@ -53,5 +54,12 @@ public class Metadata {
 
     public void setPayable(boolean payable) {
         isPayable = payable;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 }
